@@ -1,7 +1,13 @@
+import { FacilityProvider } from '../../context/FacilityContext';
+
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <section>{children}</section>;
+  return (
+    <FacilityProvider>
+      <section>{children}</section>
+    </FacilityProvider>
+  );
 }

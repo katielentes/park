@@ -1,0 +1,76 @@
+{
+  "parkingFacilities": [
+    {
+      "facilityId": 1,
+      "facilityName": "Hampton - Rogers Park",
+      "customers": [
+        {
+          "customerId": 1,
+          "customerName": "Customer 1",
+          "phone": "123-456-7890",
+          "car": {
+            "carId": 1,
+            "carName": "Car 1",
+            "assignedSpot": "A1"
+          }
+        },
+        {
+          "customerId": 2,
+          "customerName": "Customer 2",
+          "phone": "123-456-7890",
+          "car": {
+            "carId": 2,
+            "carName": "Car 2",
+            "assignedSpot": "B1"
+          }
+        },
+        {
+          "customerId": 3,
+          "customerName": "Customer 3",
+          "phone": "123-456-7890",
+          "car": {
+            "carId": 3,
+            "carName": "Car 3",
+            "assignedSpot": "C1"
+          }
+        }
+      ]
+    },
+    {
+      "facilityId": 2,
+      "facilityName": "Hyatt - Wicker Park",
+      "customers": [
+        {
+          "customerId": 4,
+          "customerName": "Customer 4",
+          "phone": "123-456-7890",
+          "car": {
+            "carId": 4,
+            "carName": "Car 4",
+            "assignedSpot": "A1"
+          }
+        },
+        {
+          "customerId": 5,
+          "customerName": "Customer 5",
+          "phone": "123-456-7890",
+          "car": {
+            "carId": 5,
+            "carName": "Car 5",
+            "assignedSpot": "B1"
+          }
+        },
+        {
+          "customerId": 6,
+          "customerName": "Customer 6",
+          "phone": "123-456-7890",
+          "car": {
+            "carId": 6,
+            "carName": "Car 6",
+            "assignedSpot": "C1"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
-export default function Page() {
-  return <Link href="/dashboard">Home</Link>;
-}
+const Page = () => {
+  return <Link href="/dashboard">Go to admin dashboard</Link>;
+};
+
+export default Page;
