@@ -12,28 +12,39 @@ type Ticket = {
   ticketId: number;
   serviceType: string;
   checkInTime: string;
-  checkOutTime: string | null;
+  checkOutTime: null;
   totalCost: number;
   paid: boolean;
   assignedSpot: string;
-  logs: { exit: string }[] | { enter: string }[];
-  customer: Customer;
-  car: Car;
+  note: string;
+  logs: { exit: string }[] | { enter: string; exit?: undefined }[];
+  car: {
+    carId: number;
+    plate: string;
+    carColor: string;
+    carMake: string;
+    carModel: string;
+  };
+  customer: {
+    customerId: number;
+    customerName: string;
+    phone: string;
+  };
 };
 
-type Customer = {
-  customerId: number;
-  customerName: string;
-  phone: string;
-};
+// type Customer = {
+//   customerId: number;
+//   customerName: string;
+//   phone: string;
+// };
 
-type Car = {
-  carId: number;
-  plate: string;
-  carColor: string;
-  carMake: string;
-  carModel: string;
-};
+// type Car = {
+//   carId: number;
+//   plate: string;
+//   carColor: string;
+//   carMake: string;
+//   carModel: string;
+// };
 
 // Define the custom hook
 const useFacilityTickets = (selectedFacilityId: number): Ticket[] | null => {

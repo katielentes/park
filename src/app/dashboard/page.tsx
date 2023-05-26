@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import data from '../../data.json';
 import useFacilityTickets from '@/hooks/useFacilityTickets';
 import { FacilityContext } from '@/context/FacilityContext';
@@ -10,18 +10,23 @@ import ErrorText from '@/components/ErrorText';
 
 const DashboardPage = () => {
   const { parkingFacilities } = data;
-  const [searchValue, setSearchValue] = React.useState('');
-  //TODO: Save seletedFacilityId in local storage
+  const [searchValue, setSearchValue] = useState('');
+  //TODO: Save selectedFacilityId in local storage
   const { selectedFacility, setSelectedFacility } = useContext(FacilityContext);
+  //TODO: Add loading state
+  //TODD: memoize facilityTickets
   const facilityTickets = useFacilityTickets(selectedFacility);
   const [filteredData, setFilteredData] = React.useState(facilityTickets);
   const [error, setError] = React.useState('');
 
+  //TODO: create debounce function -- have a hook but dont know how to use it
+
   useEffect(() => {
     if (facilityTickets && facilityTickets.length === 0) {
       setError('No open tickets');
+    } else {
+      setError('');
     }
-    setSearchValue('');
     setFilteredData(facilityTickets);
   }, [facilityTickets]);
 
@@ -30,23 +35,27 @@ const DashboardPage = () => {
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
+    const { value } = event.target;
+    filterBySearch(event);
+    setSearchValue(value);
   };
 
   const filterBySearch = (event: any) => {
+    const { value } = event.target;
+    const { key } = event;
     //TODO: Fix any type
-    //TODO: create debounce function
     if (facilityTickets && facilityTickets.length > 0) {
-      if (event.key === 'Escape') {
+      if (key === 'Escape') {
         setSearchValue('');
+        setError('');
         setFilteredData(facilityTickets);
-      } else if (searchValue === '') {
+      } else if (value === '') {
         setFilteredData(facilityTickets);
       } else {
         const nameMatch = facilityTickets.filter((ticket) => {
           return ticket.customer.customerName
             .toLowerCase()
-            .includes(searchValue.toLowerCase());
+            .includes(value.toLowerCase());
         });
         setFilteredData(nameMatch);
         nameMatch.length === 0 ? setError('No matches') : setError('');
@@ -77,6 +86,7 @@ const DashboardPage = () => {
             />
           );
         })}
+      {/*TODO: Should below text be an ErrorText */}
       {!selectedFacility && <div>Please select location</div>}
       {filteredData &&
         filteredData.map((ticket) => {
