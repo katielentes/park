@@ -12,9 +12,10 @@ interface FacilityInfoProps {
 
 const initialSelectedFacility: number | 1 = 1;
 
-export const FacilityContext = createContext<FacilityContextType | undefined>(
-  undefined
-);
+export const FacilityContext = createContext<FacilityContextType>({
+  selectedFacility: initialSelectedFacility,
+  setSelectedFacility: () => {},
+});
 
 export const FacilityProvider: React.FC<FacilityInfoProps> = ({ children }) => {
   const [selectedFacility, setSelectedFacility] = useState<number | 1>(
