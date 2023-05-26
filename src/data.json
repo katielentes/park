@@ -12,6 +12,7 @@
           "totalCost": 0,
           "paid": false,
           "assignedSpot": "A1",
+          "note": "This is a note",
           "logs": [
             { "exit": "2023-06-01T20:00:00.000Z" },
             { "enter": "2023-06-02T06:00:00.000Z" }
@@ -25,7 +26,7 @@
           },
           "customer": {
             "customerId": 1,
-            "customerName": "Customer 1",
+            "customerName": "Tom Wambgans",
             "phone": "123-456-7890"
           }
         },
@@ -37,6 +38,7 @@
           "totalCost": 0,
           "paid": false,
           "assignedSpot": "A2",
+          "note": "This is a note",
           "logs": [
             { "exit": "2023-06-01T20:00:00.000Z" },
             { "enter": "2023-06-02T06:00:00.000Z" }
@@ -50,7 +52,7 @@
           },
           "customer": {
             "customerId": 2,
-            "customerName": "Customer 2",
+            "customerName": "Pam Gams",
             "phone": "123-456-7890"
           }
         },
@@ -62,6 +64,7 @@
           "totalCost": 0,
           "paid": false,
           "assignedSpot": "A3",
+          "note": "This is a note",
           "logs": [
             { "exit": "2023-06-01T20:00:00.000Z" },
             { "enter": "2023-06-02T06:00:00.000Z" }
@@ -75,7 +78,7 @@
           },
           "customer": {
             "customerId": 3,
-            "customerName": "Customer 4",
+            "customerName": "Lam Pamb",
             "phone": "123-456-7890"
           }
         }
@@ -93,6 +96,7 @@
           "totalCost": 0,
           "paid": false,
           "assignedSpot": "B1",
+          "note": "This is a note",
           "logs": [
             { "exit": "2023-06-01T20:00:00.000Z" },
             { "enter": "2023-06-02T06:00:00.000Z" }
@@ -106,7 +110,7 @@
           },
           "customer": {
             "customerId": 4,
-            "customerName": "Customer 4",
+            "customerName": "Yim Yambgans",
             "phone": "123-456-7890"
           }
         },
@@ -118,6 +122,7 @@
           "totalCost": 0,
           "paid": false,
           "assignedSpot": "B2",
+          "note": "This is a note",
           "logs": [
             { "exit": "2023-06-01T20:00:00.000Z" },
             { "enter": "2023-06-02T06:00:00.000Z" }
@@ -131,7 +136,7 @@
           },
           "customer": {
             "customerId": 5,
-            "customerName": "Customer 5",
+            "customerName": "Chim Chambgans",
             "phone": "123-456-7890"
           }
         },
@@ -143,6 +148,7 @@
           "totalCost": 0,
           "paid": false,
           "assignedSpot": "B3",
+          "note": "This is a note",
           "logs": [
             { "exit": "2023-06-01T20:00:00.000Z" },
             { "enter": "2023-06-02T06:00:00.000Z" }
@@ -156,7 +162,33 @@
           },
           "customer": {
             "customerId": 6,
-            "customerName": "Customer 6",
+            "customerName": "Ronald McDonald",
+            "phone": "123-456-7890"
+          }
+        },
+        {
+          "ticketId": 7,
+          "serviceType": "overnight",
+          "checkInTime": "2023-06-01T00:00:00.000Z",
+          "checkOutTime": null,
+          "totalCost": 0,
+          "paid": false,
+          "assignedSpot": "B3",
+          "note": "This is a note",
+          "logs": [
+            { "exit": "2023-06-01T20:00:00.000Z" },
+            { "enter": "2023-06-02T06:00:00.000Z" }
+          ],
+          "car": {
+            "carId": 7,
+            "plate": "52FJDK",
+            "carMake": "BMW",
+            "carModel": "X5",
+            "carColor": "Black"
+          },
+          "customer": {
+            "customerId": 7,
+            "customerName": "Will Smith",
             "phone": "123-456-7890"
           }
         }

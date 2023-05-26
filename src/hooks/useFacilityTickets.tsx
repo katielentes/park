@@ -36,15 +36,15 @@ type Car = {
 };
 
 // Define the custom hook
-const useFacilityData = (selectedFacilityId: number): Facility | null => {
-  const [facilityData, setFacilityData] = useState<Facility | null>(null);
+const useFacilityTickets = (selectedFacilityId: number): Ticket[] | null => {
+  const [facilityTickets, setFacilityTickets] = useState<Ticket[] | null>(null);
 
   useEffect(() => {
     // Simulate an API call to fetch the facility data
     const fetchData = async () => {
       try {
         // Fetch the data from your API endpoint or import it from a JSON file
-        // const response = await fetch('/api/facilityData'); // Adjust the endpoint as needed
+        // const response = await fetch('/api/facilityTickets'); // Adjust the endpoint as needed
         // const data = await response.json();
 
         // Find the facility with the selectedFacilityId
@@ -52,8 +52,8 @@ const useFacilityData = (selectedFacilityId: number): Facility | null => {
           (facility: Facility) => facility.facilityId === selectedFacilityId
         );
 
-        // Update the facilityData state
-        setFacilityData(selectedFacility || null);
+        // Update the facilityTickets state
+        setFacilityTickets(selectedFacility?.tickets || null);
       } catch (error) {
         console.error('Error fetching facility data:', error);
       }
@@ -63,7 +63,7 @@ const useFacilityData = (selectedFacilityId: number): Facility | null => {
     fetchData();
   }, [selectedFacilityId]);
 
-  return facilityData;
+  return facilityTickets;
 };
 
-export default useFacilityData;
+export default useFacilityTickets;

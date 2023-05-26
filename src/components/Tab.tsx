@@ -14,7 +14,7 @@ const Tab: React.FC<TabProps> = ({ selected, onSelect, selectId, label }) => {
     <button
       onClick={handleSelect}
       className={`mb-4 mr-4 ${
-        selected && 'border-b pb-2 border-teal-600 text-teal-600 font-bold'
+        selected && 'border-b pb-2 border-blue-700 text-blue-700 font-bold'
       }`}
     >
       {label}
