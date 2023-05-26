@@ -12,39 +12,34 @@ type Ticket = {
   ticketId: number;
   serviceType: string;
   checkInTime: string;
-  checkOutTime: null;
+  checkOutTime: null | string;
   totalCost: number;
   paid: boolean;
   assignedSpot: string;
   note: string;
-  logs: { exit: string }[] | { enter: string; exit?: undefined }[];
-  car: {
-    carId: number;
-    plate: string;
-    carColor: string;
-    carMake: string;
-    carModel: string;
-  };
-  customer: {
-    customerId: number;
-    customerName: string;
-    phone: string;
-  };
+  logs: LogEntry[];
+  car: Car;
+  customer: Customer;
 };
 
-// type Customer = {
-//   customerId: number;
-//   customerName: string;
-//   phone: string;
-// };
+type LogEntry = {
+  enter?: string;
+  exit?: string;
+};
 
-// type Car = {
-//   carId: number;
-//   plate: string;
-//   carColor: string;
-//   carMake: string;
-//   carModel: string;
-// };
+type Car = {
+  carId: number;
+  plate: string;
+  carColor: string;
+  carMake: string;
+  carModel: string;
+};
+
+type Customer = {
+  customerId: number;
+  customerName: string;
+  phone: string;
+};
 
 // Define the custom hook
 const useFacilityTickets = (selectedFacilityId: number): Ticket[] | null => {
@@ -60,8 +55,9 @@ const useFacilityTickets = (selectedFacilityId: number): Ticket[] | null => {
 
         // Find the facility with the selectedFacilityId
         const selectedFacility = data.parkingFacilities.find(
-          (facility: Facility) => facility.facilityId === selectedFacilityId
-        );
+          (facility: { facilityId: number }) =>
+            facility.facilityId === selectedFacilityId
+        ) as Facility | undefined;
 
         // Update the facilityTickets state
         setFacilityTickets(selectedFacility?.tickets || null);

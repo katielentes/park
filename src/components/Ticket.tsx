@@ -9,7 +9,7 @@ type TicketProps = {
     totalCost: number;
     paid: boolean;
     assignedSpot: string;
-    logs: { exit: string }[] | { enter: string }[];
+    logs: LogEntry[];
     car: {
       carId: number;
       plate: string;
@@ -23,6 +23,11 @@ type TicketProps = {
       phone: string;
     };
   };
+};
+
+type LogEntry = {
+  enter?: string;
+  exit?: string;
 };
 
 const Ticket: React.FC<TicketProps> = ({ ticket }) => {

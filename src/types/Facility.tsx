@@ -12,7 +12,7 @@ type Ticket = {
   totalCost: number;
   paid: boolean;
   assignedSpot: string;
-  logs: { exit: string }[] | { enter: string }[];
+  logs: [{ enter: string; exit: string }];
   customer: Customer;
   car: Car;
 };
