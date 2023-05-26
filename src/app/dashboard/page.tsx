@@ -35,6 +35,15 @@ const DashboardPage = () => {
     setSearchValue('');
   };
 
+  const onKeyPress = (event: any) => {
+    if (event.key === 'Escape') {
+      setSearchValue('');
+      setError('');
+      setFilteredData(facilityTickets);
+    }
+    //TODO: maybe only call filterBySearch if event.key === 'Enter'
+  };
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { value } = event.target;
@@ -44,14 +53,9 @@ const DashboardPage = () => {
 
   const filterBySearch = (event: any) => {
     const { value } = event.target;
-    const { key } = event;
     //TODO: Fix any type
     if (facilityTickets && facilityTickets.length > 0) {
-      if (key === 'Escape') {
-        setSearchValue('');
-        setError('');
-        setFilteredData(facilityTickets);
-      } else if (value === '') {
+      if (value === '') {
         setFilteredData(facilityTickets);
       } else {
         const nameMatch = facilityTickets.filter((ticket) => {
@@ -73,6 +77,7 @@ const DashboardPage = () => {
       <SearchBar
         placeholder="Search by name"
         handleSearchChange={handleSearchChange}
+        onKeyPress={onKeyPress}
         value={searchValue}
       />
       {parkingFacilities &&
