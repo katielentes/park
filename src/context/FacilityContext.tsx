@@ -2,22 +2,22 @@
 import React, { createContext, useState } from 'react';
 
 interface FacilityContextType {
-  selectedFacility: number | null;
-  setSelectedFacility: (facility: number | null) => void;
+  selectedFacility: number | 1;
+  setSelectedFacility: (facility: number | 1) => void;
 }
 
 interface FacilityInfoProps {
   children: React.ReactNode;
 }
 
-const initialSelectedFacility: number | null = null;
+const initialSelectedFacility: number | 1 = 1;
 
 export const FacilityContext = createContext<FacilityContextType | undefined>(
   undefined
 );
 
 export const FacilityProvider: React.FC<FacilityInfoProps> = ({ children }) => {
-  const [selectedFacility, setSelectedFacility] = useState<number | null>(
+  const [selectedFacility, setSelectedFacility] = useState<number | 1>(
     initialSelectedFacility
   );
 

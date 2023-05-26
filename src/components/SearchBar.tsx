@@ -2,7 +2,6 @@ import { useState } from 'react';
 interface SearchBarProps {
   value: string;
   placeholder: string;
-  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -20,7 +19,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
         value={value}
         onChange={handleSearchChange}
         placeholder={placeholder}
-        onKeyDown={onKeyDown}
       />
     </div>
   );

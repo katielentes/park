@@ -32,9 +32,11 @@ const DashboardPage = () => {
 
   const onSelect = (facilityId: number) => {
     setSelectedFacility(facilityId);
+    setSearchValue('');
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const { value } = event.target;
     filterBySearch(event);
     setSearchValue(value);
@@ -72,7 +74,6 @@ const DashboardPage = () => {
         placeholder="Search by name"
         handleSearchChange={handleSearchChange}
         value={searchValue}
-        onKeyDown={filterBySearch}
       />
       {parkingFacilities &&
         parkingFacilities.map((facility) => {
