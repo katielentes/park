@@ -1,4 +1,3 @@
-import { useState } from 'react';
 interface SearchBarProps {
   value: string;
   placeholder: string;
@@ -8,7 +7,6 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({
   value,
   placeholder,
-  onKeyDown,
   handleSearchChange,
 }) => {
   return (
