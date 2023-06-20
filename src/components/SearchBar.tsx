@@ -14,7 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <div className="search-bar my-4">
       <input
-        className="border border-gray-400 bg-gray-100 rounded px-2 py-1 min-w-full"
+        className="border border-gray-400 bg-gray-100 text-black rounded px-2 py-1 min-w-full"
         type="text"
         value={value}
         onKeyDown={onKeyPress}
