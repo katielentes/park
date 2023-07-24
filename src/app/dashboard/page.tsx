@@ -1,18 +1,20 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
-import data from '../../data.json';
+import React, { useContext, useEffect, useState, useMemo } from 'react';
+// import data from '../../data.json';
+import facilities from '../../facilities.json';
 import useFacilityTickets from '@/hooks/useFacilityTickets';
 import { FacilityContext } from '@/context/FacilityContext';
 import Tab from '@/components/Tab';
-import Ticket from '@/components/Ticket';
+import TicketCard from '@/components/Ticket';
 import SearchBar from '@/components/SearchBar';
 import ErrorText from '@/components/ErrorText';
+import { Ticket } from '@/types/facility';
 
 const DashboardPage = () => {
-  const { parkingFacilities } = data;
   const [searchValue, setSearchValue] = useState('');
   //TODO: Save selectedFacilityId in local storage
   const { selectedFacility, setSelectedFacility } = useContext(FacilityContext);
+  console.log('selectedFacility', selectedFacility);
   //TODO: Add loading state
   //TODD: memoize facilityTickets
   const facilityTickets = useFacilityTickets(selectedFacility);
@@ -44,6 +46,13 @@ const DashboardPage = () => {
     //TODO: maybe only call filterBySearch if event.key === 'Enter'
   };
 
+  // const findOpenTicketsByFacility = (selectedFacility: number) => {
+  //   return tickets.filter(
+  //     (ticket) =>
+  //       ticket.facilityId === selectedFacility && ticket.checkOutTime === null
+  //   );
+  // };
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const { value } = event.target;
@@ -53,12 +62,11 @@ const DashboardPage = () => {
 
   const filterBySearch = (event: any) => {
     const { value } = event.target;
-    //TODO: Fix any type
     if (facilityTickets && facilityTickets.length > 0) {
       if (value === '') {
         setFilteredData(facilityTickets);
       } else {
-        const nameMatch = facilityTickets.filter((ticket) => {
+        const nameMatch = facilityTickets.filter((ticket: any) => {
           return ticket.customer.customerName
             .toLowerCase()
             .includes(value.toLowerCase());
@@ -80,8 +88,8 @@ const DashboardPage = () => {
         onKeyPress={onKeyPress}
         value={searchValue}
       />
-      {parkingFacilities &&
-        parkingFacilities.map((facility) => {
+      {facilities &&
+        facilities.map((facility) => {
           return (
             <Tab
               key={facility.facilityId}
@@ -95,8 +103,8 @@ const DashboardPage = () => {
       {/*TODO: Should below text be an ErrorText */}
       {!selectedFacility && <div>Please select location</div>}
       {filteredData &&
-        filteredData.map((ticket) => {
-          return <Ticket key={ticket.ticketId} ticket={ticket} />;
+        filteredData.map((ticket: Ticket) => {
+          return <TicketCard key={ticket.ticketId} ticket={ticket} />;
         })}
       {error && <ErrorText text={error} />}
     </>

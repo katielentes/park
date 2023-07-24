@@ -1,7 +1,6 @@
 type Facility = {
   facilityId: number;
   facilityName: string;
-  tickets: Ticket[];
 };
 
 type Ticket = {
@@ -12,9 +11,14 @@ type Ticket = {
   totalCost: number;
   paid: boolean;
   assignedSpot: string;
-  logs: [{ enter: string; exit: string }];
+  logs: LogEntry[];
   customer: Customer;
   car: Car;
+};
+
+type LogEntry = {
+  type: 'enter' | 'exit';
+  time: string;
 };
 
 type Customer = {

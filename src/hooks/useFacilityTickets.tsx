@@ -1,30 +1,40 @@
 import { useEffect, useState } from 'react';
-import data from '../data.json';
+import facilities from '../facilities.json';
+import tickets from '../tickets.json';
 
 // Define the type for the facility data
 type Facility = {
   facilityId: number;
   facilityName: string;
-  tickets: Ticket[];
 };
 
 type Ticket = {
   ticketId: number;
+  facilityId: number;
   serviceType: string;
   checkInTime: string;
-  checkOutTime: null | string;
+  checkOutTime: string | null;
   totalCost: number;
   paid: boolean;
   assignedSpot: string;
-  note: string;
   logs: LogEntry[];
-  car: Car;
-  customer: Customer;
+  car: {
+    carId: number;
+    plate: string;
+    carColor: string;
+    carMake: string;
+    carModel: string;
+  };
+  customer: {
+    customerId: number;
+    customerName: string;
+    phone: string;
+  };
 };
 
 type LogEntry = {
-  enter?: string;
-  exit?: string;
+  type: 'enter' | 'exit';
+  time: string;
 };
 
 type Car = {
@@ -54,13 +64,18 @@ const useFacilityTickets = (selectedFacilityId: number): Ticket[] | null => {
         // const data = await response.json();
 
         // Find the facility with the selectedFacilityId
-        const selectedFacility = data.parkingFacilities.find(
+        const selectedFacility = facilities.find(
           (facility: { facilityId: number }) =>
             facility.facilityId === selectedFacilityId
         ) as Facility | undefined;
-
+        const filteredTickets = tickets.filter(
+          (ticket) =>
+            ticket.facilityId === selectedFacilityId &&
+            ticket.checkOutTime === null
+        );
         // Update the facilityTickets state
-        setFacilityTickets(selectedFacility?.tickets || null);
+        setFacilityTickets(filteredTickets || []);
+        //TODO: idk this is not working rn
       } catch (error) {
         console.error('Error fetching facility data:', error);
       }

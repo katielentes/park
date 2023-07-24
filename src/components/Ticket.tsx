@@ -1,36 +1,7 @@
 import React from 'react';
+import { Ticket } from '@/types/facility';
 
-type TicketProps = {
-  ticket: {
-    ticketId: number;
-    serviceType: string;
-    checkInTime: string;
-    checkOutTime: string | null;
-    totalCost: number;
-    paid: boolean;
-    assignedSpot: string;
-    logs: LogEntry[];
-    car: {
-      carId: number;
-      plate: string;
-      carColor: string;
-      carMake: string;
-      carModel: string;
-    };
-    customer: {
-      customerId: number;
-      customerName: string;
-      phone: string;
-    };
-  };
-};
-
-type LogEntry = {
-  enter?: string;
-  exit?: string;
-};
-
-const Ticket: React.FC<TicketProps> = ({ ticket }) => {
+const TicketCard = ({ ticket }: Ticket) => {
   return (
     <div className="border border-gray-300 rounded p-4 mb-2">
       <h3>Ticket ID: {ticket.ticketId}</h3>
@@ -42,10 +13,8 @@ const Ticket: React.FC<TicketProps> = ({ ticket }) => {
       <p>Assigned Spot: {ticket.assignedSpot}</p>
       <h4>Logs:</h4>
       <ul>
-        {ticket.logs.map((log, index) => (
-          <li key={index}>
-            {log.exit ? `Exit: ${log.exit}` : `Enter: ${log.enter}`}
-          </li>
+        {ticket.logs?.map((log: Ticket.LogEntry, index: number) => (
+          <li key={index}>{`${log.type}: ${log.time}`}</li>
         ))}
       </ul>
       {ticket.car && (
@@ -67,4 +36,4 @@ const Ticket: React.FC<TicketProps> = ({ ticket }) => {
   );
 };
 
-export default Ticket;
+export default TicketCard;
