@@ -1,30 +1,45 @@
 'use client';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-interface FacilityContextType {
-  selectedFacility: number | 1;
-  setSelectedFacility: (facility: number | 1) => void;
-}
+type FacilityContextType = {
+  facilities: Facility[];
+  setFacilities: (facilities: Facility[]) => void;
+  selectedFacility: Facility | null;
+  setSelectedFacility: (facility: Facility) => void;
+};
 
-interface FacilityInfoProps {
-  children: React.ReactNode;
-}
+const FacilityContext = createContext<FacilityContextType | undefined>(
+  undefined
+);
 
-const initialSelectedFacility: number | 1 = 1;
-
-export const FacilityContext = createContext<FacilityContextType>({
-  selectedFacility: initialSelectedFacility,
-  setSelectedFacility: () => {},
-});
-
-export const FacilityProvider: React.FC<FacilityInfoProps> = ({ children }) => {
-  const [selectedFacility, setSelectedFacility] = useState<number | 1>(
-    initialSelectedFacility
+export const FacilityProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [selectedFacility, setSelectedFacility] = useState<Facility | null>(
+    null
   );
 
   return (
-    <FacilityContext.Provider value={{ selectedFacility, setSelectedFacility }}>
+    <FacilityContext.Provider
+      value={{
+        facilities,
+        setFacilities,
+        selectedFacility,
+        setSelectedFacility,
+      }}
+    >
       {children}
     </FacilityContext.Provider>
   );
+};
+
+export const useFacilityContext = () => {
+  const context = useContext(FacilityContext);
+  if (context === undefined) {
+    throw new Error(
+      'useFacilityContext must be used within a FacilityProvider'
+    );
+  }
+  return context;
 };

@@ -1,25 +1,58 @@
 'use client';
-import React, { useContext, useEffect, useState, useMemo } from 'react';
-// import data from '../../data.json';
-import facilities from '../../facilities.json';
+import React, { useEffect, useState } from 'react';
 import useFacilityTickets from '@/hooks/useFacilityTickets';
-import { FacilityContext } from '@/context/FacilityContext';
+import { useFacilityContext } from '@/context/FacilityContext';
 import Tab from '@/components/Tab';
 import TicketCard from '@/components/Ticket';
 import SearchBar from '@/components/SearchBar';
 import ErrorText from '@/components/ErrorText';
-import { Ticket } from '@/types/facility';
+
+async function getFacilities() {
+  try {
+    const res = await fetch('/api/facilities');
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching facilities:', error);
+    throw new Error('Failed to fetch facilities');
+  }
+}
 
 const DashboardPage = () => {
+  const [loading, setLoading] = useState(true); // Add loading state
+
   const [searchValue, setSearchValue] = useState('');
   //TODO: Save selectedFacilityId in local storage
-  const { selectedFacility, setSelectedFacility } = useContext(FacilityContext);
-  console.log('selectedFacility', selectedFacility);
-  //TODO: Add loading state
+  const { facilities, setFacilities, selectedFacility, setSelectedFacility } =
+    useFacilityContext();
+
   //TODD: memoize facilityTickets
-  const facilityTickets = useFacilityTickets(selectedFacility);
-  const [filteredData, setFilteredData] = React.useState(facilityTickets);
-  const [error, setError] = React.useState('');
+  const facilityTickets = useFacilityTickets(
+    selectedFacility?.facilityId || facilities[0]?.facilityId
+  );
+  const [filteredData, setFilteredData] = useState(facilityTickets);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    getFacilities()
+      .then((data) => {
+        setFacilities(data.facilities);
+
+        if (data.facilities.length > 0) {
+          setSelectedFacility(data.facilities[0]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching facilities:', error);
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false once fetch is complete
+      });
+  }, []);
 
   //TODO: create debounce function -- have a hook but dont know how to use it
 
@@ -33,7 +66,10 @@ const DashboardPage = () => {
   }, [facilityTickets]);
 
   const onSelect = (facilityId: number) => {
-    setSelectedFacility(facilityId);
+    const selectedFacility =
+      facilities.find((facility) => facility.facilityId === facilityId) ||
+      facilities[0];
+    setSelectedFacility(selectedFacility);
     setSearchValue('');
   };
 
@@ -54,7 +90,6 @@ const DashboardPage = () => {
   // };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
     const { value } = event.target;
     filterBySearch(event);
     setSearchValue(value);
@@ -88,25 +123,26 @@ const DashboardPage = () => {
         onKeyPress={onKeyPress}
         value={searchValue}
       />
-      {facilities &&
-        facilities.map((facility) => {
-          return (
+      {!loading ? (
+        <>
+          {facilities.map((facility) => (
             <Tab
               key={facility.facilityId}
               selectId={facility.facilityId}
               onSelect={onSelect}
-              selected={selectedFacility === facility.facilityId}
+              selected={selectedFacility?.facilityId === facility.facilityId}
               label={facility.facilityName}
             />
-          );
-        })}
-      {/*TODO: Should below text be an ErrorText */}
-      {!selectedFacility && <div>Please select location</div>}
-      {filteredData &&
-        filteredData.map((ticket: Ticket) => {
-          return <TicketCard key={ticket.ticketId} ticket={ticket} />;
-        })}
-      {error && <ErrorText text={error} />}
+          ))}
+          {!selectedFacility && <div>Please select location</div>}
+          {filteredData &&
+            filteredData.map((ticket: Ticket) => (
+              <TicketCard key={ticket.ticketId} ticket={ticket} />
+            ))}
+          {error && <ErrorText text={error} />}
+        </>
+      ) : null}
+      {loading ? <div>Loading...</div> : null}
     </>
   );
 };
